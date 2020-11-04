@@ -37,12 +37,14 @@ namespace Lativ.Controllers
         {
             using (var x = new DataEntities1())
             {
-                x.Table.Add(new Table
+                var table = new Table
                 {
                     Title = model.Title,
                     Content = model.Content
-                });
-                var result = await x.SaveChangesAsync();
+                };
+                x.Table.Add(table);
+                await x.SaveChangesAsync();
+                var result = table.Id;
                 return result;
             }
         }
@@ -66,7 +68,7 @@ namespace Lativ.Controllers
         }
 
         // DELETE api/<controller>/5
-        public async Task Delete(int id)
+        public async Task Delete([FromBody] int id)
         {
             using (var x = new DataEntities1())
             {
